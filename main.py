@@ -6,10 +6,14 @@
 this code is for wavelet, we need to shift the data from [-1,1] to [0,1] first
 '''
 import numpy as np
+import torch
 import json
 from json import JSONEncoder
 from generate_sin_data import Sin_distribution
 from kde import kernel_density
+
+
+
 
 class indexing:
     def __init__(self) -> None:
@@ -24,6 +28,7 @@ class indexing:
 
 
 class wavelet:
+    @torch.compile
     def __init__(self) -> None:
         self.seen=indexing().generate(5)
         self.power=[np.power(2,nn/2) for nn in range(11)]
@@ -48,6 +53,7 @@ class wavelet:
 
 
 class generate_x_tensor:
+    @torch.compile
     def __init__(self):
         self.wavelet_basis=wavelet()
 
@@ -64,6 +70,7 @@ class generate_x_tensor:
 #generate_x_tensor().compute_basis_val(3,x, [8,8,8])
 
 class tensor:
+    @torch.compile
     def __init__(self):
 
         self.generate_x_tensor= generate_x_tensor()
@@ -155,6 +162,7 @@ class tensor:
 
 
 class tensor_new_basis:
+    @torch.compile
     def __init__(self, tensor_shape, dim,X_train):
         self.P_x_basis=[]
         self.new_shape=[]
@@ -222,8 +230,8 @@ dims = [5,6,7,8,9,10]
 #step_size_list = [0.0, 0.0, 0.0, 0.2,0.25,0.25,0.3,0.3,0.3,0.3,0.3]
 step_size_list_new = [0.0, 0.0, 0.25, 0.3,0.3,0.35,0.35,0.35,0.4,0.4,0.4]
 n_data_list = [1000000]#[1e5, 2e5, 4e5, 6e5, 8e5, 1e6]
-MM_list=[0,0,8,8,8,8,4,4,4,4,4]
-LL_list=[0,0,8,3,3,3,2,2,2,2,2]
+MM_list=[0,0,8,8,8,4,4,4,4,4,4]
+LL_list=[0,0,8,4,4,4,2,2,2,2,2]
 data_dict = {}
 
 wavelet_error_list = []

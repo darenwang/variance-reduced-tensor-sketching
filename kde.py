@@ -1,9 +1,10 @@
 from scipy import stats
-
+import torch
 
 class kernel_density():
     def __init__(self):
         pass
+    @torch.compile
     def compute(self,dim,data, X_new):
 
         values = [[] for _ in range(dim)]
