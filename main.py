@@ -13,7 +13,7 @@ from tensor_prediction_stage import VRS_prediction
 
 
 #####################   Use  mixture of Gasussian as the underlining distribution
-dim=8
+dim=5
 N_train= 50000
 
 means=[dd/dim for dd in range(dim)]
