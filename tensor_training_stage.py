@@ -99,7 +99,8 @@ class tensor:
         ###omitted for now to run large experiments
         #print(D,cur_rank)
         cur_rank=min(cur_rank,3)
-        
+        if len(D)==2:
+            cur_rank = 2
         #print(D)
         #print('selected rank =', cur_rank)
         
