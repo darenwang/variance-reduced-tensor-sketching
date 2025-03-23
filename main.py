@@ -14,7 +14,7 @@ from tensor_prediction_stage import VRS_prediction
 
 #####################   Use  mixture of Gasussian as the underlining distribution
 dim=8
-N_train= 5000
+N_train= 50000
 
 means=[dd/dim for dd in range(dim)]
 distribution=general_normal_density(dim,means, np.ones(dim)*0.3, np.ones(dim)*0.9, np.ones(dim)*0.3 )
