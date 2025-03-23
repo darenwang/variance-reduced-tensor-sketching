@@ -20,7 +20,7 @@ means=[dd/dim for dd in range(dim)]
 distribution=general_normal_density(dim,means, np.ones(dim)*0.3, np.ones(dim)*0.9, np.ones(dim)*0.3 )
 
 ##############tuning parameter selection
-MM=20
+MM=5
 if N_train<2**dim*MM:
     print('insufficient data')
     LL =1
