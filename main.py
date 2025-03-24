@@ -25,7 +25,6 @@ print(MM,LL)
 tensor_shape=[LL for _ in range(dim)]
 
 tensor_shape[0]=MM
-domain_factor=0.01
 
 #########################################
 
