@@ -1,20 +1,20 @@
-from polynomial import polynomial
+from wavelet import wavelet
 import numpy as np
 
  
 class generate_basis_vector:
     def __init__(self):
-        self.basis=polynomial()
+        self.basis=wavelet()
 
     #basis_val[d][m] is the m-th basis evaluated at x[d]
     def compute_basis_val(self, dim,x,tensor_shape):
         
-        basis_val=[self.basis.compute_single_x_all_degree(tensor_shape[d],x[d]) for d in range(dim)]
+        basis_val=[self.basis.compute_single_x_all_basis(tensor_shape[d],x[d]) for d in range(dim)]
 
         return basis_val
     def compute_basis_val_new_coordinates(self,dim,x,tensor_shape, new_coordinates):
         
-        basis_val=[self.basis.compute_single_x_all_degree(tensor_shape[d],x[new_coordinates[d]]) for d in range(dim)]
+        basis_val=[self.basis.compute_single_x_all_basis(tensor_shape[d],x[new_coordinates[d]]) for d in range(dim)]
 
         return basis_val
 
@@ -80,27 +80,26 @@ class tensor:
         
 
         P,D = np.linalg.svd(A_temp, full_matrices=False, hermitian=False)[:2]
-        #print(D)
         
         #thresholding the rank 
-        #should be the maximum ratio!!
         #we keep at least one singular function
         cur_rank=1
-        cur_max_ratio=0
+        cur_square_sum= D[0]*D[0]
         #for rank in range(1,len(D)):
         for rank in range(1,len(D)):
-            if  D[rank-1]/D[rank]>cur_max_ratio:
-                cur_max_ratio=D[rank-1]/D[rank]
-                cur_rank=rank
+            temp=D[rank]*D[rank]
+            if temp/cur_square_sum<1/50:
+                break
+            else:
+                cur_rank=rank+1
+                cur_square_sum+=temp
         #we keep everything  D[1,...,rank-1]
         #print chosen_rank to ensure that the threshold we choose is good
         
         ##################################### this is essential  for debugging 
         ###omitted for now to run large experiments
         #print(D,cur_rank)
-        cur_rank=min(cur_rank,3)
-        if len(D)==2:
-            cur_rank = 2
+        #cur_rank=min(cur_rank,3)
         #print(D)
         #print('selected rank =', cur_rank)
         
@@ -114,4 +113,9 @@ class tensor:
         
         return P_basis
 
- 
+#P_x_basis=[]
+#dim= 8
+#for dd in range(dim):
+#    print('range =',dd)
+            
+#    P_x_basis.append( tensor(dim,dd).compute_range_basis(X_train,tensor_shape) ) 

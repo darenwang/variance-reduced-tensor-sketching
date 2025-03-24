@@ -69,3 +69,4 @@ class general_normal_density():
         return data1+data2    
     
     
+   

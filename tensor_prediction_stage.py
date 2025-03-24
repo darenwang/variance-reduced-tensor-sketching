@@ -1,4 +1,5 @@
-from polynomial import polynomial_new_basis
+from wavelet import wavelet_new_basis
+
 import numpy as np
 
 from tensor_training_stage import tensor
@@ -7,7 +8,7 @@ from tensor_training_stage import tensor
  
 class generate_estimated_basis_vector:
     def __init__(self, dim,M ):
-        self.basis=polynomial_new_basis(M)
+        self.basis=wavelet_new_basis(M)
         self.dim=dim
 
     #basis_val[d][m] is the m-th basis evaluated at x[d]
@@ -18,19 +19,20 @@ class generate_estimated_basis_vector:
         return basis_val
 
 
+#generate_new_basis_vector(dim, P_x_basis,MM).compute_basis_val(X_train[0])
 ######################
 
 
 
 
-class VRS_prediction:
+class tensor_prediction:
     def __init__(self, tensor_shape, dim,M,X_train):
         self.P_x_basis=[]
         self.dim=dim 
         self.new_shape=[]
         self.generate_new_basis_vector=generate_estimated_basis_vector(dim,M)
         for dd in range(dim):
-            print('coordinate =',dd)
+            print('cooridnate =',dd)
             
             self.P_x_basis.append( tensor(dim,dd).compute_range_basis(X_train,tensor_shape) ) 
             self.new_shape.append(len(self.P_x_basis[-1]))
@@ -57,8 +59,6 @@ class VRS_prediction:
         for dd in range(self.dim-1, -1, -1):
             temp_tensor= np.tensordot( np.reshape(basis_val[dd], (len(basis_val[dd]),1)), [temp_tensor],axes=(1,0))
 
-        #for dd in range(dim):
-        #    temp_tensor= np.tensordot([temp_tensor], [basis_val[dd]],axes=[[0],[0]])
         return temp_tensor 
     
     def predict(self,x_test):
@@ -67,3 +67,4 @@ class VRS_prediction:
         for dd in range(1,self.dim):
             ans= np.tensordot(basis_val[dd],ans,axes=(0,0) )
         return ans
+  
