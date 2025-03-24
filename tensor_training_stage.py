@@ -85,6 +85,7 @@ class tensor:
         #we keep at least one singular function
         cur_rank=1
         cur_square_sum= D[0]*D[0]
+        #print(D)
         #for rank in range(1,len(D)):
         for rank in range(1,len(D)):
             temp=D[rank]*D[rank]
@@ -101,7 +102,7 @@ class tensor:
         #print(D,cur_rank)
         #cur_rank=min(cur_rank,3)
         #print(D)
-        #print('selected rank =', cur_rank)
+        print('selected rank =', cur_rank)
         
         #P_transpose gets the colunms into the rows
         P_transpose=P.transpose()

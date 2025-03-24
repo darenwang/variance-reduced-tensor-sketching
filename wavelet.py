@@ -26,6 +26,8 @@ class wavelet:
         return -1
     def compute(self,l_index,x):
         if l_index==0:
+            if x>1 or x<0:
+                return 0
             return 1
         level, k= self.seen[l_index]
         #print(level, k)
@@ -38,7 +40,7 @@ class wavelet:
         return np.array([ self.compute(ii, x_input) for ii  in range(number_of_basis)  ])
 
 basis=wavelet()
-basis.compute_single_x_all_basis(10, 0.3)
+basis.compute_single_x_all_basis(10, -1)
 
 
 class wavelet_new_basis:
