@@ -33,7 +33,7 @@ kde_rec=0
 
 
 
-distribution=gaussian_mixture(dim, [-5,-5], [0.5,0.5])
+distribution=gaussian_mixture(dim, [1,-1], [1,0.5])
 for rr in range(10):
     
     
