@@ -5,16 +5,16 @@ from gaussian_mixture import  gaussian_mixture
 
 from kde import kernel_density
 
-from tensor_prediction_stage import vrs
+from tensor_estimate  import vrs_prediction
   
 #from full_tensor import compute_full_tensor
  
 
-dim=5
+dim=7
 N_train= 10000
 
 ##############tuning parameter selection
-MM=20
+MM=10
 if N_train<2**dim*MM:
     print('insufficient data')
     LL =1
@@ -42,7 +42,7 @@ for rr in range(10):
     X_test= distribution.generate(N_test)
     
     #############density transform 
-    vrs_model=vrs(tensor_shape, dim, MM, X_train)
+    vrs_model=vrs_prediction(tensor_shape, dim, MM, X_train)
     y_lr= vrs_model.predict(X_test)
     y_true = np.array([distribution.density_value(xx) for xx in X_test])
     lr_rec += np.linalg.norm(y_lr - y_true,2)**2/np.linalg.norm(y_true,2)**2
@@ -58,4 +58,3 @@ for rr in range(10):
     kde_rec+=err_kde
 
     print('kde error = ', kde_rec/(rr+1))
-
